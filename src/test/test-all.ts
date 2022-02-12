@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 import { TestSingle, Diff } from ".";
-import { Runnable, getNativeJsFiles, getSummaryReportFilename, getNowLiteral } from "../shared";
+import { Runnable, Utils } from "../shared";
 import { Writer, HtmlWriter } from "../writer";
 
 export class TestAll implements Runnable {
@@ -33,7 +33,7 @@ export class TestAll implements Runnable {
         writer.addTitle(1, "Testing Report");
 
         writer.addParagraph(`Root Directory: ${this.rootDir}`, "", "");
-        writer.addParagraph(`Date: ${getNowLiteral()}`, "", "");
+        writer.addParagraph(`Date: ${Utils.getNowLiteral()}`, "", "");
 
         writer.addTitle(2, `Invalid ${invalid.length}`);
         invalid.forEach((item) => {
@@ -50,11 +50,11 @@ export class TestAll implements Runnable {
             writer.addParagraph(item.srcFile, item.reportFile, "green");
         });
         
-        writer.write(getSummaryReportFilename(this.rootDir, "html"));
+        writer.write(Utils.getSummaryReportFilename(this.rootDir, "html"));
     }
 
     public run() {
-        const allFiles = getNativeJsFiles(this.rootDir);
+        const allFiles = Utils.getNativeJsFiles(this.rootDir);
         let result: Diff[] = [];
         allFiles.forEach((filename) => {
             let test: TestSingle = new TestSingle(filename);

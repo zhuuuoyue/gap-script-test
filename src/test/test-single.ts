@@ -4,7 +4,7 @@ import _ from "lodash";
 import { Document } from "gap-script";
 
 import { compareLines, Diff, LineContent } from ".";
-import { Runnable, LINE_SEPARATOR, getReportFilename, getOutFilename, getNowLiteral } from "../shared";
+import { Runnable, LINE_SEPARATOR, Utils } from "../shared";
 import { Writer, HtmlWriter } from "../writer";
 
 function createLineLiteral(prefix: string, line: LineContent): string {
@@ -22,8 +22,8 @@ export class TestSingle implements Runnable {
 
     constructor(filename: string) {
         this.filename = filename;
-        this.reportFilename = getReportFilename(filename);
-        this.outFilename = getOutFilename(filename);
+        this.reportFilename = Utils.getReportFilename(filename);
+        this.outFilename = Utils.getOutFilename(filename);
     }
 
     private validate(): boolean {
@@ -43,7 +43,7 @@ export class TestSingle implements Runnable {
 
         writer.addParagraph(`src: <a href="${diff.srcFile}" target="_blank">${diff.srcFile}</a> | [${diff.srcLines} line(s)]`, "", "");
         writer.addParagraph(`dst: <a href="${diff.outFile}" target="_blank">${diff.outFile}</a> | [${diff.outLines} line(s)]`, "", "");
-        writer.addParagraph(`Date: ${getNowLiteral()}`, "", "");
+        writer.addParagraph(`Date: ${Utils.getNowLiteral()}`, "", "");
 
         writer.addTitle(2, `Differences ${diff.diffLines.length}`);
         

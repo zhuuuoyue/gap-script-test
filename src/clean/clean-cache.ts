@@ -1,6 +1,6 @@
 import fs from "fs";
 
-import { Runnable, getGeneratedJsFiles, getReportFiles } from "../shared";
+import { Runnable, Utils } from "../shared";
 
 export class CleanCache implements Runnable {
     private rootDir: string;
@@ -16,13 +16,11 @@ export class CleanCache implements Runnable {
     }
 
     run(): void {
-        let generatedFiles: string[] = getGeneratedJsFiles(this.rootDir);
+        let generatedFiles: string[] = Utils.getGeneratedJsFiles(this.rootDir);
         this.deleteFiles(generatedFiles);
 
-        let reportFiles: string[] = getReportFiles(this.rootDir);
+        let reportFiles: string[] = Utils.getReportFiles(this.rootDir);
         this.deleteFiles(reportFiles);
-
-        console.log(generatedFiles.length, reportFiles.length);
     }
     
 }
